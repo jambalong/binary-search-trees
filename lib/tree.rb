@@ -57,6 +57,19 @@ class Tree
     root
   end
 
+  def find(data, root = self.root)
+    return root unless root
+
+    case data <=> root.data
+    when -1
+      root.left = find(data, root.left)
+    when 1
+      root.right = find(data, root.right)
+    when 0
+      root
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
