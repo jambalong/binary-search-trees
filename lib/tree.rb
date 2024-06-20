@@ -25,11 +25,12 @@ class Tree
   def insert(data, root = self.root)
     root ||= Node.new(data)
 
-    return root if data == root.data
-
-    if data < root.data
+    case data <=> root.data
+    when 0
+      return root
+    when -1
       root.left = insert(data, root.left)
-    else
+    when 1
       root.right = insert(data, root.right)
     end
 
