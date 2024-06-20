@@ -19,7 +19,7 @@ class Tree
     root.left = build_tree(array[0...mid])
     root.right = build_tree(array[mid + 1..-1])
 
-    return root
+    root
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
