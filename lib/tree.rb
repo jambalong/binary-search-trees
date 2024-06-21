@@ -70,6 +70,29 @@ class Tree
     end
   end
 
+   # breadth-first level order by iteration
+   def level_order(node = self.root)
+    return unless node
+
+    queue = [node]
+    visited = Array.new
+
+    while !queue.empty?
+      node = queue.shift
+      next if visited.include?(node)
+
+      visited << node
+      yield node if block_given?
+
+      children = [node&.left, node&.right].compact
+      children.each do |child|
+        queue << child unless visited.include?(child)
+      end
+    end
+
+    visited
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
