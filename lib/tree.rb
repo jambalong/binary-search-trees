@@ -70,8 +70,8 @@ class Tree
     end
   end
 
-   # breadth-first level order by iteration
-   def level_order(node = self.root)
+  # breadth-first level order by iteration
+  def level_order(node = self.root)
     return unless node
 
     queue = [node]
