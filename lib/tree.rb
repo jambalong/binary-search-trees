@@ -14,59 +14,59 @@ class Tree
     return nil if array.empty?
 
     mid = (array.length - 1) / 2
-    root = Node.new(array[mid])
+    node = Node.new(array[mid])
 
-    root.left = build_tree(array[0...mid])
-    root.right = build_tree(array[mid + 1..-1])
+    node.left = build_tree(array[0...mid])
+    node.right = build_tree(array[mid + 1..-1])
 
-    root
+    node
   end
 
-  def insert(data, root = self.root)
-    root ||= Node.new(data)
+  def insert(data, node = self.root)
+    node ||= Node.new(data)
 
-    case data <=> root.data
+    case data <=> node.data
     when -1
-      root.left = insert(data, root.left)
+      node.left = insert(data, node.left)
     when 1
-      root.right = insert(data, root.right)
+      node.right = insert(data, node.right)
     when 0
-      root
+      node
     end
 
-    root
+    node
   end
 
-  def delete(data, root = self.root)
-    return root unless root
+  def delete(data, node = self.root)
+    return node unless node
 
-    case data <=> root.data
+    case data <=> node.data
     when -1
-      root.left = delete(data, root.left)
+      node.left = delete(data, node.left)
     when 1
-      root.right = delete(data, root.right)
+      node.right = delete(data, node.right)
     when 0
-      return root.right if root.left.nil?
-      return root.left if root.right.nil?
+      return node.right if node.left.nil?
+      return node.left if node.right.nil?
 
       # Get the minimum value in the right subtree
-      root.data = min_value(root.right)
-      root.right = delete(root.data, root.right)
+      node.data = min_value(node.right)
+      node.right = delete(node.data, node.right)
     end
 
-    root
+    node
   end
 
-  def find(data, root = self.root)
-    return root unless root
+  def find(data, node = self.root)
+    return node unless node
 
-    case data <=> root.data
+    case data <=> node.data
     when -1
-      root.left = find(data, root.left)
+      node.left = find(data, node.left)
     when 1
-      root.right = find(data, root.right)
+      node.right = find(data, node.right)
     when 0
-      root
+      node
     end
   end
 
@@ -78,11 +78,11 @@ class Tree
 
   private
 
-  def min_value(root)
-    min_value = root.data
-    while root.left
-      min_value = root.left.data
-      root = root.left
+  def min_value(node)
+    min_value = node.data
+    while node.left
+      min_value = node.left.data
+      node = node.left
     end
 
     min_value
