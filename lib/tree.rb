@@ -90,7 +90,7 @@ class Tree
       end
     end
 
-    visited
+    visited.map(&:data)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
