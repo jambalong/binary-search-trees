@@ -107,6 +107,43 @@ class Tree
     end
   end
 
+  def inorder(node = self.root, visited = [], &block)
+    return [] unless node
+
+    inorder(node.left, visited, &block)
+
+    visited << node.data
+    yield node if block_given?
+
+    inorder(node.right, visited, &block)
+
+    visited
+  end
+
+  def preorder(node = self.root, visited = [], &block)
+    return [] unless node
+
+    visited << node.data
+    yield node if block_given?
+
+    preorder(node.left, visited, &block)
+    preorder(node.right, visited, &block)
+
+    visited
+  end
+
+  def postorder(node = self.root, visited = [], &block)
+    return [] unless node
+
+    postorder(node.left, visited, &block)
+    postorder(node.right, visited, &block)
+
+    visited << node.data
+    yield node if block_given?
+
+    visited
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
