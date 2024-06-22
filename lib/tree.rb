@@ -144,6 +144,15 @@ class Tree
     visited
   end
 
+  def height(node = self.root)
+    return -1 unless node
+
+    left_height = height(node.left)
+    right_height = height(node.right)
+
+    1 + [left_height, right_height].max
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
