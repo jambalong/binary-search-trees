@@ -71,27 +71,24 @@ class Tree
   end
 
   # breadth-first level order by iteration
-  def level_order(node = self.root)
-    return unless node
+  # def level_order(node = self.root)
+  #   return [] unless node
 
-    queue = [node]
-    visited = Array.new
+  #   queue = [node]
+  #   visited = []
 
-    while !queue.empty?
-      node = queue.shift
-      next if visited.include?(node)
+  #   until queue.empty?
+  #     node = queue.shift
+  #     visited << node.data
 
-      visited << node
-      yield node if block_given?
+  #     yield node if block_given?
 
-      children = [node&.left, node&.right].compact
-      children.each do |child|
-        queue << child unless visited.include?(child)
-      end
-    end
+  #     queue << node.left if node.left
+  #     queue << node.right if node.right
+  #   end
 
-    visited.map(&:data)
-  end
+  #   visited
+  # end
 
   # breadth-first level order by recursion
   def level_order(node = self.root, level = 0, visited = [])
@@ -104,9 +101,7 @@ class Tree
     level_order(node.right, level + 1, visited)
 
     if block_given?
-      visited.each do |level|
-        level.each { |node| yield node }
-      end
+      visited.flatten.each { |node| yield node }
     else
       visited.flatten.map(&:data)
     end
