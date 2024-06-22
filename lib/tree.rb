@@ -93,6 +93,25 @@ class Tree
     visited.map(&:data)
   end
 
+  # breadth-first level order by recursion
+  def level_order(node = self.root, level = 0, visited = [])
+    return [] unless node
+
+    visited[level] ||= []
+    visited[level] << node
+
+    level_order(node.left, level + 1, visited)
+    level_order(node.right, level + 1, visited)
+
+    if block_given?
+      visited.each do |level|
+        level.each { |node| yield node }
+      end
+    else
+      visited.flatten.map(&:data)
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
