@@ -12,7 +12,7 @@ class Node
     @right = nil
   end
 
-  def <=>(other_node)
-    self.data <=> other_node.data
+  def <=>(other)
+    data <=> other.data
   end
 end

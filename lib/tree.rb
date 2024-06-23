@@ -17,12 +17,12 @@ class Tree
     node = Node.new(array[mid])
 
     node.left = build_tree(array[0...mid])
-    node.right = build_tree(array[mid + 1..-1])
+    node.right = build_tree(array[mid + 1..])
 
     node
   end
 
-  def insert(data, node = self.root)
+  def insert(data, node = root)
     node ||= Node.new(data)
 
     case data <=> node.data
@@ -37,7 +37,7 @@ class Tree
     node
   end
 
-  def delete(data, node = self.root)
+  def delete(data, node = root)
     return node unless node
 
     case data <=> node.data
@@ -57,7 +57,7 @@ class Tree
     node
   end
 
-  def find(data, node = self.root)
+  def find(data, node = root)
     return node unless node
 
     case data <=> node.data
@@ -91,7 +91,7 @@ class Tree
   # end
 
   # breadth-first level order by recursion
-  def level_order(node = self.root, level = 0, visited = [])
+  def level_order(node = root, level = 0, visited = [], &block)
     return [] unless node
 
     visited[level] ||= []
@@ -101,13 +101,13 @@ class Tree
     level_order(node.right, level + 1, visited)
 
     if block_given?
-      visited.flatten.each { |node| yield node }
+      visited.flatten.each(&block)
     else
       visited.flatten.map(&:data)
     end
   end
 
-  def inorder(node = self.root, visited = [], &block)
+  def inorder(node = root, visited = [], &block)
     return [] unless node
 
     inorder(node.left, visited, &block)
@@ -120,7 +120,7 @@ class Tree
     visited
   end
 
-  def preorder(node = self.root, visited = [], &block)
+  def preorder(node = root, visited = [], &block)
     return [] unless node
 
     visited << node.data
@@ -132,7 +132,7 @@ class Tree
     visited
   end
 
-  def postorder(node = self.root, visited = [], &block)
+  def postorder(node = root, visited = [], &block)
     return [] unless node
 
     postorder(node.left, visited, &block)
@@ -144,7 +144,7 @@ class Tree
     visited
   end
 
-  def height(node = self.root)
+  def height(node = root)
     return -1 unless node
 
     left_height = height(node.left)
@@ -153,7 +153,7 @@ class Tree
     1 + [left_height, right_height].max
   end
 
-  def depth(target_node, current_node = self.root, current_depth = 0)
+  def depth(target_node, current_node = root, current_depth = 0)
     return -1 unless current_node
 
     return current_depth if current_node == target_node
@@ -164,7 +164,7 @@ class Tree
     [left_depth, right_depth].max
   end
 
-  def balanced?(node = self.root)
+  def balanced?(node = root)
     return true if node.nil?
 
     left_height = height(node.left)
@@ -197,5 +197,4 @@ class Tree
 
     min_value
   end
-
 end
