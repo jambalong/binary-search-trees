@@ -164,6 +164,15 @@ class Tree
     [left_depth, right_depth].max
   end
 
+  def balanced?(node = self.root)
+    return true unless node
+
+    left_height = height(node.left)
+    right_height = height(node.right)
+
+    (left_height - right_height).abs <= 1 && balanced?(node.left) && balanced?(node.right)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
