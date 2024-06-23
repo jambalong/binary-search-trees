@@ -153,6 +153,17 @@ class Tree
     1 + [left_height, right_height].max
   end
 
+  def depth(target_node, current_node = self.root, current_depth = 0)
+    return -1 unless current_node
+
+    return current_depth if current_node == target_node
+
+    left_depth = depth(target_node, current_node.left, current_depth + 1)
+    right_depth = depth(target_node, current_node.right, current_depth + 1)
+
+    [left_depth, right_depth].max
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
